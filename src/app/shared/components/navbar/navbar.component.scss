@@ -3,8 +3,8 @@
 
 .top-nav {
   background: linear-gradient(90deg, $primary 0%, $secondary 100%);
-  padding: 0 $spacing-lg;
-  height: 70px;
+  padding: 0 $spacing-md;
+  height: 60px;
   @include flex-between;
   position: fixed;
   top: 0;
@@ -15,20 +15,20 @@
   transition: all $transition-base;
 
   @include responsive(md) {
-    padding: 0 $spacing-md;
-    height: 60px;
+    padding: 0 $spacing-sm;
+    height: 55px;
   }
 
   @include responsive(sm) {
-    padding: 0 $spacing-sm;
-    height: 56px;
+    padding: 0 $spacing-xs;
+    height: 52px;
   }
 }
 
 .nav-brand {
   color: $white;
-  font-size: 1.4rem;
-  font-weight: $font-weight-bold;
+  font-size: 1.2rem;
+  font-weight: $font-weight-semibold;
   text-decoration: none;
   @include flex-center;
   gap: $spacing-sm;
@@ -46,7 +46,7 @@
 
 .nav-links {
   @include flex-between;
-  gap: $spacing-lg;
+  gap: $spacing-md;
   list-style: none;
   margin: 0;
   padding: 0;
@@ -54,8 +54,8 @@
   a {
     color: rgba($white, 0.9);
     text-decoration: none;
-    padding: $spacing-sm $spacing-md;
-    border-radius: $radius-md;
+    padding: $spacing-xs $spacing-sm;
+    border-radius: $radius-sm;
     font-size: $font-size-sm;
     transition: all $transition-base;
     font-weight: $font-weight-medium;

@@ -12,14 +12,14 @@
 
 html {
   scroll-behavior: smooth;
-  font-size: 16px;
+  font-size: 14.5px;
 }
 
 body {
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   background: $light-bg;
   color: $text;
-  line-height: 1.6;
+  line-height: 1.55;
   font-weight: $font-weight-normal;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -124,11 +124,11 @@ body {
 }
 
 .sidebar {
-  width: 250px;
+  width: 220px;
   background: linear-gradient(180deg, $primary 0%, #0f2340 100%);
   color: $white;
   @include flex-col;
-  padding: $spacing-lg 0;
+  padding: $spacing-md 0;
   position: fixed;
   height: 100vh;
   overflow-y: auto;
@@ -137,10 +137,10 @@ body {
 
   .sidebar-logo {
     text-align: center;
-    font-size: 40px;
-    padding: $spacing-lg;
+    font-size: 32px;
+    padding: $spacing-md;
     border-bottom: 1px solid rgba($white, 0.1);
-    margin-bottom: $spacing-lg;
+    margin-bottom: $spacing-md;
     transition: transform $transition-base;
 
     &:hover {
@@ -189,8 +189,8 @@ body {
   }
 
   .logout-btn {
-    margin: $spacing-lg $spacing-md;
-    padding: $spacing-md;
+    margin: $spacing-md $spacing-md;
+    padding: $spacing-sm $spacing-md;
     background: rgba($danger, 0.2);
     color: #ff6b6b;
     border: 1px solid rgba($danger, 0.3);
@@ -275,15 +275,14 @@ body {
 }
 
 .main-content {
-  margin-left: 250px;
+  margin-left: 220px;
   flex: 1;
-  padding: $spacing-xl;
-  overflow-y: auto;
+  padding: $spacing-md;
   background: $light-bg;
 
   @include responsive(md) {
     margin-left: 60px;
-    padding: $spacing-lg;
+    padding: $spacing-md;
   }
 
   @include responsive(sm) {
@@ -295,18 +294,21 @@ body {
 // ── Page Header ─────────────────────────────────────────────── 
 .page-header {
   @include flex-between;
-  margin-bottom: $spacing-xl;
+  margin-bottom: $spacing-lg;
   flex-wrap: wrap;
-  gap: $spacing-lg;
+  gap: $spacing-md;
 
   h1 {
-    @include heading-1;
+    font-size: $font-size-xl;
+    font-weight: $font-weight-bold;
+    line-height: 1.2;
     color: $primary;
+    margin: 0;
   }
 
   @include responsive(md) {
     h1 {
-      @include heading-2;
+      font-size: $font-size-lg;
     }
   }
 }
@@ -329,14 +331,10 @@ body {
 
 .stat-card {
   @include card;
-  padding: $spacing-lg;
-  border-left: 4px solid $border;
+  padding: $spacing-md;
+  border-left: 4px solid $secondary;
   display: grid;
-  gap: $spacing-md;
-
-  &.blue {
-    border-left-color: $secondary;
-  }
+  gap: $spacing-sm;
 
   &.green {
     border-left-color: $success;
@@ -379,35 +377,32 @@ body {
 // ── Cards ───────────────────────────────────────────────────── 
 .card {
   @include card-shadow;
-  border-radius: $radius-lg;
+  border-radius: $radius-md;
   overflow: hidden;
-  margin-bottom: $spacing-lg;
+  margin-bottom: $spacing-md;
+  padding: $spacing-md;
+  border-bottom: 1px solid $border;
+  background: rgba($primary, 0.02);
 
-  .card-header {
-    padding: $spacing-lg;
-    border-bottom: 1px solid $border;
-    background: rgba($primary, 0.02);
+  h2 {
+    @include heading-3;
+    color: $primary;
+    margin: 0;
+  }
 
-    h2 {
-      @include heading-3;
-      color: $primary;
-      margin: 0;
-    }
-
-    h3 {
-      font-size: $font-size-lg;
-      font-weight: $font-weight-semibold;
-      color: $primary;
-      margin: 0;
-    }
+  h3 {
+    font-size: $font-size-lg;
+    font-weight: $font-weight-semibold;
+    color: $primary;
+    margin: 0;
   }
 
   .card-body {
-    padding: $spacing-lg;
+    padding: $spacing-sm;
   }
 
   .card-footer {
-    padding: $spacing-lg;
+    padding: $spacing-sm;
     border-top: 1px solid $border;
     background: rgba($primary, 0.01);
   }
@@ -417,13 +412,9 @@ body {
 .search-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: $spacing-lg;
+  gap: $spacing-md;
   align-items: end;
-  margin-bottom: $spacing-lg;
-
-  @include responsive(md) {
-    grid-template-columns: repeat(2, 1fr);
-  }
+  margin-bottom: $spacing-md;
 
   @include responsive(sm) {
     grid-template-columns: 1fr;
@@ -477,8 +468,8 @@ body {
 }
 
 .btn-lg {
-  padding: $spacing-lg $spacing-xl;
-  font-size: $font-size-lg;
+  padding: $spacing-md $spacing-lg;
+  font-size: $font-size-md;
 }
 
 .btn-icon {
@@ -500,7 +491,7 @@ body {
   th {
     background: $primary;
     color: $white;
-    padding: $spacing-md;
+    padding: $spacing-sm;
     text-align: left;
     font-weight: $font-weight-semibold;
     font-size: $font-size-xs;
@@ -509,17 +500,8 @@ body {
   }
 
   td {
-    padding: $spacing-md;
-    border-bottom: 1px solid $border;
-    vertical-align: middle;
-  }
-
-  tbody tr {
-    transition: background-color $transition-base;
-
-    &:hover td {
-      background: rgba($primary, 0.02);
-    }
+    padding: $spacing-sm;
+    background: rgba($primary, 0.02);
   }
 
   tr:last-child td {

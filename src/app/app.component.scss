@@ -3,9 +3,9 @@
 
 /* Main content with navbar padding */
 .main-content {
-  min-height: calc(100vh - 70px);
-  padding-top: 70px;
+  min-height: calc(100vh - 60px);
+  padding-top: 60px;
   background: $light-bg;
-  padding-bottom: $spacing-xl;
+  padding-bottom: $spacing-lg;
   animation: fadeIn $transition-base;
 }
