@@ -1,0 +1,108 @@
+<!-- src/app/admin/statistics/statistics.component.html -->
+<div class="dashboard-layout">
+  <aside class="sidebar">
+    <div class="sidebar-logo">⚕️</div>
+    <nav>
+      <a routerLink="/admin/dashboard"           routerLinkActive="active">📊 Dashboard</a>
+      <a routerLink="/admin/manage-doctors"      routerLinkActive="active">👨‍⚕️ Doctors</a>
+      <a routerLink="/admin/manage-patients"     routerLinkActive="active">👤 Patients</a>
+      <a routerLink="/admin/manage-appointments" routerLinkActive="active">📋 Appointments</a>
+      <a routerLink="/admin/statistics"          routerLinkActive="active">📈 Statistics</a>
+    </nav>
+    <button class="logout-btn" (click)="auth.logout()">🚪 Logout</button>
+  </aside>
+  <main class="main-content">
+    <div class="page-header"><h1>System Statistics</h1></div>
+ 
+    <div *ngIf="loading" class="loading">Loading statistics...</div>
+ 
+    <div *ngIf="!loading">
+      <!-- KPI Cards -->
+      <div class="stats-grid">
+        <div class="stat-card blue">
+          <span class="stat-icon">👨‍⚕️</span>
+          <div><div class="stat-number">{{ stats.totalDoctors }}</div><div class="stat-label">Total Doctors</div></div>
+        </div>
+        <div class="stat-card green">
+          <span class="stat-icon">👤</span>
+          <div><div class="stat-number">{{ stats.totalPatients }}</div><div class="stat-label">Total Patients</div></div>
+        </div>
+        <div class="stat-card orange">
+          <span class="stat-icon">📋</span>
+          <div><div class="stat-number">{{ stats.totalAppts }}</div><div class="stat-label">Total Appointments</div></div>
+        </div>
+        <div class="stat-card blue">
+          <span class="stat-icon">⏳</span>
+          <div><div class="stat-number">{{ stats.pendingAppts }}</div><div class="stat-label">Pending</div></div>
+        </div>
+        <div class="stat-card green">
+          <span class="stat-icon">✅</span>
+          <div><div class="stat-number">{{ stats.completedAppts }}</div><div class="stat-label">Completed</div></div>
+        </div>
+        <div class="stat-card red">
+          <span class="stat-icon">❌</span>
+          <div><div class="stat-number">{{ stats.cancelledAppts }}</div><div class="stat-label">Cancelled</div></div>
+        </div>
+      </div>
+ 
+      <!-- Doctors by Specialization -->
+      <div class="card">
+        <div class="card-header"><h2>Doctors per Specialization</h2></div>
+        <div class="card-body">
+          <table class="data-table">
+            <thead><tr><th>#</th><th>Specialization</th><th>Doctor Count</th></tr></thead>
+            <tbody>
+              <tr *ngFor="let s of stats.doctorsBySpec; let i=index">
+                <td>{{ i+1 }}</td><td>{{ s.specialization }}</td>
+                <td><span class="status-badge badge-info">{{ s.count }}</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+ 
+      <!-- Appointments by Mode -->
+      <div class="card">
+        <div class="card-header"><h2>Appointments by Mode</h2></div>
+        <div class="card-body">
+          <div class="mode-stats">
+            <div *ngFor="let m of stats.apptsByMode" class="mode-stat-card">
+              <div class="mode-icon">{{ m.mode === 'Online' ? '🌐' : '🏥' }}</div>
+              <div class="mode-count">{{ m.count }}</div>
+              <div class="mode-label">{{ m.mode }}</div>
+            </div>
+          </div>
+        </div>
+      </div>
+ 
+      <!-- Daily Summary -->
+      <div class="card">
+        <div class="card-header"><h2>Daily Summary</h2></div>
+        <div class="card-body">
+          <div style="display:flex;gap:12px;align-items:center;margin-bottom:16px;">
+            <input type="date" class="form-control" style="max-width:200px;" [(ngModel)]="summaryDate">
+            <button class="btn-primary" (click)="loadDailySummary()" [disabled]="summaryLoading">
+              {{ summaryLoading ? 'Loading...' : '📊 Load Summary' }}
+            </button>
+          </div>
+          <div *ngIf="dailySummary">
+            <p><strong>Date:</strong> {{ dailySummary.date | date:'dd MMM yyyy' }}
+               &nbsp; <strong>Total:</strong> {{ dailySummary.totalAppointments }}</p>
+            <table class="data-table" style="margin-top:12px;">
+              <thead><tr><th>Mode</th><th>Specialization</th><th>Count</th><th>Confirmed</th><th>Completed</th></tr></thead>
+              <tbody>
+                <tr *ngFor="let s of dailySummary.summary">
+                  <td><span [class]="'mode-badge '+s.mode.toLowerCase()">{{ s.mode }}</span></td>
+                  <td>{{ s.name }}</td>
+                  <td>{{ s.count }}</td>
+                  <td>{{ s.confirmed }}</td>
+                  <td>{{ s.completed }}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>

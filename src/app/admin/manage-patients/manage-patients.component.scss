@@ -1,0 +1,6 @@
+.search-input {
+  padding: 8px 14px; border: 2px solid #e0e0e0; border-radius: 8px;
+  font-size: 14px; min-width: 280px;
+  &:focus { outline: none; border-color: #2E75B6; }
+}
+.loading { text-align:center; padding:40px; color:#888; }

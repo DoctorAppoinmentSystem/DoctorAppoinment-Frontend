@@ -1,0 +1,9 @@
+.loading { text-align:center; padding:40px; color:#888; }
+.mode-stats { display:flex; gap:24px; flex-wrap:wrap; }
+.mode-stat-card {
+  background:#f8f9ff; border-radius:12px; padding:24px 32px;
+  text-align:center; border:2px solid #e0e0e0; min-width:160px;
+  .mode-icon { font-size:36px; margin-bottom:8px; }
+  .mode-count { font-size:32px; font-weight:700; color:#1E3A5F; }
+  .mode-label { font-size:14px; color:#888; margin-top:4px; }
+}

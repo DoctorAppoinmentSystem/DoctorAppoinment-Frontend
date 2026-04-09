@@ -1,0 +1,11 @@
+
+<nav class="top-nav">
+  <div class="nav-brand">🏥 DocAppointment</div>
+  <div class="nav-links" *ngIf="auth.isLoggedIn()">
+    <span class="nav-role">{{ role }}</span>
+    <button (click)="logout()" class="nav-logout">Logout</button>
+  </div>
+  <div class="nav-links" *ngIf="!auth.isLoggedIn()">
+    <a routerLink="/login">Login</a>
+  </div>
+</nav>

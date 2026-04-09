@@ -1,0 +1,62 @@
+<!-- src/app/doctor/dashboard/dashboard.component.html -->
+<div class="dashboard-layout">
+  <aside class="sidebar">
+    <div class="sidebar-logo">👨‍⚕️</div>
+    <nav>
+      <a routerLink="/doctor/dashboard"    routerLinkActive="active">📊 Dashboard</a>
+      <a routerLink="/doctor/appointments" routerLinkActive="active">📋 Appointments</a>
+      <a routerLink="/doctor/schedule"     routerLinkActive="active">🗓️ Schedule</a>
+    </nav>
+    <button class="logout-btn" (click)="logout()">🚪 Logout</button>
+  </aside>
+
+  <main class="main-content">
+    <div class="page-header"><h1>Doctor Dashboard</h1></div>
+
+    <div class="stats-grid">
+      <div class="stat-card orange">
+        <span class="stat-icon">⏳</span>
+        <div><div class="stat-number">{{ pending }}</div><div class="stat-label">Pending</div></div>
+      </div>
+      <div class="stat-card green">
+        <span class="stat-icon">✅</span>
+        <div><div class="stat-number">{{ confirmed }}</div><div class="stat-label">Confirmed</div></div>
+      </div>
+      <div class="stat-card blue">
+        <span class="stat-icon">🏁</span>
+        <div><div class="stat-number">{{ completed }}</div><div class="stat-label">Completed</div></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header"><h2>All Appointments</h2></div>
+      <div class="card-body">
+        <table class="data-table">
+          <thead>
+            <tr><th>Patient</th><th>Specialization</th><th>Date</th><th>Time</th><th>Mode</th><th>Status</th><th>Actions</th></tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let appt of appointments">
+              <td>{{ appt.patientName }}</td>
+              <td>{{ appt.specialization }}</td>
+              <td>{{ appt.appointmentDate | date:'dd MMM yyyy' }}</td>
+              <td>{{ appt.appointmentTime }}</td>
+              <td><span [class]="'mode-badge ' + appt.mode.toLowerCase()">{{ appt.mode }}</span></td>
+              <td><span [class]="'status-badge badge-' + appt.status.toLowerCase()">{{ appt.status }}</span></td>
+              <td>
+                <button *ngIf="appt.status === 'Pending'"
+                        (click)="updateStatus(appt.id,'Confirmed')" class="btn-sm btn-success">Accept</button>
+                <button *ngIf="appt.status === 'Pending'"
+                        (click)="updateStatus(appt.id,'Cancelled')" class="btn-sm btn-danger">Reject</button>
+                <button *ngIf="appt.status === 'Confirmed'"
+                        (click)="updateStatus(appt.id,'Completed')" class="btn-sm btn-info">Complete</button>
+                <button *ngIf="appt.status === 'Confirmed'"
+                        (click)="updateStatus(appt.id,'NoShow')"    class="btn-sm btn-warning">No-Show</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </main>
+</div>

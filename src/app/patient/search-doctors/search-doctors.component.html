@@ -1,0 +1,119 @@
+<!-- src/app/patient/search-doctors/search-doctors.component.html -->
+<div class="dashboard-layout">
+  <aside class="sidebar">
+    <div class="sidebar-logo">🏥</div>
+    <nav>
+      <a routerLink="/patient/dashboard"       routerLinkActive="active">📊 Dashboard</a>
+      <a routerLink="/patient/search-doctors"  routerLinkActive="active">🔍 Find Doctors</a>
+      <a routerLink="/patient/my-appointments" routerLinkActive="active">📋 My Appointments</a>
+    </nav>
+    <button class="logout-btn" (click)="auth.logout()">🚪 Logout</button>
+  </aside>
+ 
+  <main class="main-content">
+    <div class="page-header"><h1>Find a Doctor</h1></div>
+ 
+    <!-- Search Card -->
+    <div class="card">
+      <div class="card-header"><h2>Search by Specialty, Mode & Date</h2></div>
+      <div class="card-body">
+        <div class="search-grid">
+          <div class="form-group">
+            <label>Specialty *</label>
+            <select class="form-control" [(ngModel)]="selectedSpec">
+              <option [value]="0">-- Select Specialty --</option>
+              <optgroup *ngFor="let cat of getGroups()" [label]="cat">
+                <option *ngFor="let s of getByCategory(cat)" [value]="s.id">{{ s.name }}</option>
+              </optgroup>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Consultation Mode *</label>
+            <select class="form-control" [(ngModel)]="selectedMode">
+              <option value="">-- Select Mode --</option>
+              <option value="Online">🌐 Online (Teleconsultation)</option>
+              <option value="Offline">🏥 Offline (In-Clinic)</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Date *</label>
+            <input type="date" class="form-control" [(ngModel)]="selectedDate"
+                   [min]="today">
+          </div>
+        </div>
+        <button class="btn-primary" (click)="searchDoctors()" [disabled]="loading">
+          {{ loading ? 'Searching...' : '🔍 Search Doctors' }}
+        </button>
+      </div>
+    </div>
+ 
+    <!-- Not Available Alert -->
+    <div *ngIf="noAvailability && !loading" class="alert alert-warning">
+      <strong>⚠ Not Available</strong> — All doctors for this specialty and mode are fully booked on this date.
+      Please choose a different date or mode.
+    </div>
+ 
+    <!-- Doctor List -->
+    <div *ngIf="availableDoctors.length > 0 && !selectedDoctor" class="card">
+      <div class="card-header"><h2>Available Doctors ({{ availableDoctors.length }})</h2></div>
+      <div class="card-body">
+        <div class="doctor-list">
+          <div *ngFor="let doc of availableDoctors" class="doctor-card" (click)="selectDoctor(doc)">
+            <div class="doctor-avatar">
+              <img *ngIf="doc.profilePhoto" [src]="doc.profilePhoto" alt="Photo"
+                   style="width:60px;height:60px;border-radius:50%;object-fit:cover;">
+              <span *ngIf="!doc.profilePhoto" class="avatar-placeholder">👨‍⚕️</span>
+            </div>
+            <div class="doctor-details">
+              <h3>Dr. {{ doc.doctorName }}</h3>
+              <p>{{ doc.degree }}</p>
+              <p class="exp">{{ doc.experience }} years experience</p>
+              <div class="slots-info">
+                <span class="badge-info" style="padding:4px 10px;border-radius:12px;font-size:12px;">
+                  {{ 13 - doc.bookedSlots.length }} slots available
+                </span>
+                <span [class]="'mode-badge ' + doc.mode.toLowerCase()">{{ doc.mode }}</span>
+              </div>
+            </div>
+            <div class="select-arrow">→</div>
+          </div>
+        </div>
+      </div>
+    </div>
+ 
+    <!-- Time Slot Booking -->
+    <div *ngIf="selectedDoctor" class="card">
+      <div class="card-header">
+        <h2>Book with Dr. {{ selectedDoctor.doctorName }}</h2>
+        <button class="btn-back" (click)="selectedDoctor=null">← Back to doctors</button>
+      </div>
+      <div class="card-body">
+        <p style="margin-bottom:16px;color:#666;">
+          Select an available time slot for <strong>{{ selectedDate | date:'EEEE, dd MMM yyyy' }}</strong>
+        </p>
+        <div class="time-slot-grid">
+          <button *ngFor="let slot of timeSlots"
+                  class="time-slot"
+                  [class.booked]="isSlotBooked(slot)"
+                  [class.selected]="selectedTime === slot"
+                  [disabled]="isSlotBooked(slot)"
+                  (click)="selectedTime = slot">
+            {{ slot }}
+            <small *ngIf="isSlotBooked(slot)">Booked</small>
+          </button>
+        </div>
+ 
+        <div class="form-group" style="margin-top:20px; max-width:500px;">
+          <label>Notes / Symptoms (optional)</label>
+          <textarea class="form-control" [(ngModel)]="notes" rows="3"
+                    placeholder="Describe your symptoms..."></textarea>
+        </div>
+ 
+        <button class="btn-primary btn-confirm" (click)="bookAppointment()" [disabled]="!selectedTime">
+          ✓ Confirm Appointment
+        </button>
+      </div>
+    </div>
+  </main>
+</div>
+

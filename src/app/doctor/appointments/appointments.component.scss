@@ -1,0 +1,8 @@
+.form-select-sm { padding:6px 12px; border:2px solid #e0e0e0; border-radius:6px; font-size:13px; }
+.loading { text-align:center; padding:40px; color:#888; }
+.action-btns { display:flex; gap:6px; flex-wrap:wrap; }
+.btn-sm { padding:5px 12px; border-radius:6px; border:none; font-size:12px; font-weight:600; cursor:pointer; }
+.btn-green  { background:#d4edda; color:#155724; &:hover { background:#c3e6cb; } }
+.btn-red    { background:#f8d7da; color:#721c24; &:hover { background:#f5c6cb; } }
+.btn-blue   { background:#d1ecf1; color:#0c5460; &:hover { background:#bee5eb; } }
+.btn-orange { background:#fff3cd; color:#856404; &:hover { background:#ffeeba; } }

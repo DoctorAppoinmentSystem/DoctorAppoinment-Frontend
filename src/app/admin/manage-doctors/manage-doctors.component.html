@@ -1,0 +1,66 @@
+<!-- src/app/admin/manage-doctors/manage-doctors.component.html -->
+<div class="dashboard-layout">
+  <aside class="sidebar">
+    <div class="sidebar-logo">⚕️</div>
+    <nav>
+      <a routerLink="/admin/dashboard"           routerLinkActive="active">📊 Dashboard</a>
+      <a routerLink="/admin/manage-doctors"      routerLinkActive="active">👨‍⚕️ Doctors</a>
+      <a routerLink="/admin/manage-patients"     routerLinkActive="active">👤 Patients</a>
+      <a routerLink="/admin/manage-appointments" routerLinkActive="active">📋 Appointments</a>
+      <a routerLink="/admin/statistics"          routerLinkActive="active">📈 Statistics</a>
+    </nav>
+    <button class="logout-btn" (click)="auth.logout()">🚪 Logout</button>
+  </aside>
+  <main class="main-content">
+    <div class="page-header"><h1>Manage Doctors</h1></div>
+ 
+    <div class="filter-bar card" style="padding:16px 24px;margin-bottom:20px;">
+      <div style="display:flex;gap:16px;align-items:center;flex-wrap:wrap;">
+        <input type="text" class="search-input" [(ngModel)]="searchTerm"
+               (input)="applyFilter()" placeholder="🔍 Search by name or specialty...">
+        <select class="form-select-sm" [(ngModel)]="filterMode" (change)="applyFilter()">
+          <option value="">All Modes</option>
+          <option value="Online">Online</option>
+          <option value="Offline">Offline</option>
+        </select>
+        <span style="font-size:13px;color:#888;">{{ filtered.length }} doctors</span>
+      </div>
+    </div>
+ 
+    <div class="card">
+      <div class="card-body">
+        <div *ngIf="loading" class="loading">Loading...</div>
+        <table *ngIf="!loading" class="data-table">
+          <thead>
+            <tr>
+              <th>#</th><th>Name</th><th>Email</th><th>Specialization</th>
+              <th>Mode</th><th>Degree</th><th>Exp</th><th>Status</th><th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let d of filtered; let i=index">
+              <td>{{ i+1 }}</td>
+              <td>Dr. {{ d.name }}</td>
+              <td>{{ d.email }}</td>
+              <td>{{ d.specialization }}</td>
+              <td><span [class]="'mode-badge ' + d.mode.toLowerCase()">{{ d.mode }}</span></td>
+              <td>{{ d.degree }}</td>
+              <td>{{ d.experience }} yrs</td>
+              <td>
+                <span [class]="d.isAvailable ? 'status-badge badge-success' : 'status-badge badge-danger'">
+                  {{ d.isAvailable ? 'Active' : 'Inactive' }}
+                </span>
+              </td>
+              <td>
+                <button (click)="toggle(d.id)" class="btn-sm"
+                        [class]="d.isAvailable ? 'btn-red' : 'btn-green'">
+                  {{ d.isAvailable ? 'Deactivate' : 'Activate' }}
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </main>
+</div>

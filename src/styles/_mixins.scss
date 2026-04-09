@@ -1,0 +1,31 @@
+@import 'variables';
+ 
+@mixin flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+ 
+@mixin card-shadow {
+  box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+  border-radius: 12px;
+  background: $white;
+}
+ 
+@mixin responsive($bp) {
+  @if $bp == sm { @media (max-width: $sm) { @content; } }
+  @if $bp == md { @media (max-width: $md) { @content; } }
+  @if $bp == lg { @media (max-width: $lg) { @content; } }
+}
+ 
+@mixin gradient-btn {
+  background: linear-gradient(135deg, $primary, $secondary);
+  color: $white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: opacity 0.2s, transform 0.1s;
+  &:hover { opacity: 0.92; transform: translateY(-1px); }
+  &:disabled { opacity: 0.6; cursor: not-allowed; }
+}
+
