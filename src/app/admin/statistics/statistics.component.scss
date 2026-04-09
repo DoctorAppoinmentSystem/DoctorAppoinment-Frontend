@@ -1,4 +1,13 @@
 .loading { text-align:center; padding:40px; color:#888; }
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(240px, 1fr));
+  gap: 1rem;
+  margin-bottom: 2rem;
+  width: min(100%, 1100px);
+  margin-left: auto;
+  margin-right: auto;
+}
 .mode-stats { display:flex; gap:24px; flex-wrap:wrap; }
 .mode-stat-card {
   background:#f8f9ff; border-radius:12px; padding:24px 32px;

@@ -56,18 +56,18 @@ export class SearchDoctorsComponent implements OnInit {
 
 
   searchDoctors(): void {
-    if (!this.selectedSpec || !this.selectedMode || !this.selectedDate) {
-      Swal.fire('Missing Fields', 'Please select specialty, mode, and date.', 'warning');
+    const params: any = {};
+    if (this.selectedSpec) params.specializationId = this.selectedSpec.toString();
+    if (this.selectedMode) params.mode = this.selectedMode;
+    if (this.selectedDate) params.date = this.selectedDate;
+
+    if (Object.keys(params).length === 0) {
+      Swal.fire('No Filters', 'Please select at least one filter.', 'warning');
       return;
     }
+
     this.loading = true;
-    this.http.get(`${API}/appointment/available-doctors`, {
-      params: {
-        specializationId: this.selectedSpec.toString(),
-        mode: this.selectedMode,
-        date: this.selectedDate
-      }
-    }).subscribe({
+    this.http.get(`${API}/appointment/available-doctors`, { params }).subscribe({
       next: (data: any) => {
         this.availableDoctors = data;
         this.noAvailability = data.length === 0;

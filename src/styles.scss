@@ -315,26 +315,34 @@ body {
 
 // ── Stats Grid ──────────────────────────────────────────────── 
 .stats-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-  gap: $spacing-lg;
+  display: flex;
+  flex-wrap: wrap;
+  gap: $spacing-md;
   margin-bottom: $spacing-xl;
+  justify-content: center;
+  align-items: stretch;
 
   @include responsive(md) {
-    grid-template-columns: repeat(2, 1fr);
+    justify-content: center;
   }
 
   @include responsive(sm) {
-    grid-template-columns: 1fr;
+    flex-direction: column;
+    align-items: stretch;
   }
 }
 
 .stat-card {
   @include card;
+  @include glassy;
   padding: $spacing-md;
   border-left: 4px solid $secondary;
-  display: grid;
+  display: flex;
+  align-items: center;
   gap: $spacing-sm;
+  min-width: 300px;
+  max-width: 380px;
+  flex: 1 1 320px;
 
   &.green {
     border-left-color: $success;
@@ -353,7 +361,7 @@ body {
   }
 
   .stat-icon {
-    font-size: 32px;
+    font-size: 24px;
   }
 
   .stat-content {
@@ -363,13 +371,13 @@ body {
   }
 
   .stat-number {
-    font-size: 28px;
+    font-size: 20px;
     font-weight: $font-weight-bold;
     color: $primary;
   }
 
   .stat-label {
-    font-size: $font-size-sm;
+    font-size: $font-size-xs;
     color: $text-muted;
   }
 }
@@ -377,6 +385,7 @@ body {
 // ── Cards ───────────────────────────────────────────────────── 
 .card {
   @include card-shadow;
+  @include glassy;
   border-radius: $radius-md;
   overflow: hidden;
   margin-bottom: $spacing-md;
@@ -418,6 +427,45 @@ body {
 
   @include responsive(sm) {
     grid-template-columns: 1fr;
+  }
+}
+
+// ── Filter Card ──────────────────────────────────────────────── 
+.filter-card {
+  @include card-shadow;
+  @include glassy;
+  position: absolute;
+  top: $spacing-lg;
+  right: $spacing-lg;
+  width: 300px;
+  z-index: 10;
+  padding: $spacing-sm;
+
+  .card-header {
+    padding: $spacing-xs $spacing-sm;
+    border-bottom: 1px solid $border;
+
+    h3 {
+      font-size: $font-size-sm;
+      margin: 0;
+    }
+  }
+
+  .card-body {
+    padding: $spacing-sm;
+  }
+
+  @include responsive(md) {
+    width: 250px;
+    right: $spacing-md;
+  }
+
+  @include responsive(sm) {
+    position: relative;
+    top: auto;
+    right: auto;
+    width: 100%;
+    margin-bottom: $spacing-md;
   }
 }
 
