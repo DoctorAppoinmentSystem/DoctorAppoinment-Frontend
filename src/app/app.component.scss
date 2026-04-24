@@ -1,0 +1,11 @@
+@import '../styles/_variable';
+@import '../styles/_mixins';
+
+/* Main content with navbar padding */
+.main-content {
+  min-height: calc(100vh - 60px);
+  padding-top: 60px;
+  background: $light-bg;
+  padding-bottom: $spacing-lg;
+  animation: fadeIn $transition-base;
+}

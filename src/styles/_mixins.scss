@@ -1,0 +1,246 @@
+@import '_variable';
+
+// Layout Utilities
+@mixin flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@mixin flex-between {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+@mixin flex-col {
+  display: flex;
+  flex-direction: column;
+}
+
+@mixin absolute-center {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+// Card and Shadow Utilities
+@mixin card {
+  background: $white;
+  border-radius: $radius-lg;
+  box-shadow: 0 2px 8px $shadow-light;
+  transition: box-shadow $transition-base;
+  
+  &:hover {
+    box-shadow: 0 4px 16px $shadow-mid;
+  }
+}
+
+@mixin card-shadow {
+  box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+  border-radius: $radius-lg;
+  background: $white;
+}
+
+@mixin shadow-elevate($level: 1) {
+  @if $level == 1 {
+    box-shadow: 0 2px 8px $shadow-light;
+  } @else if $level == 2 {
+    box-shadow: 0 4px 16px $shadow-mid;
+  } @else if $level == 3 {
+    box-shadow: 0 12px 32px $shadow-dark;
+  }
+}
+
+@mixin glassy {
+  background: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+// Typography Utilities
+@mixin heading-1 {
+  font-size: $font-size-2xl;
+  font-weight: $font-weight-bold;
+  line-height: 1.2;
+}
+
+@mixin heading-2 {
+  font-size: $font-size-xl;
+  font-weight: $font-weight-bold;
+  line-height: 1.3;
+}
+
+@mixin heading-3 {
+  font-size: $font-size-lg;
+  font-weight: $font-weight-semibold;
+  line-height: 1.4;
+}
+
+@mixin text-truncate {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+@mixin text-clamp($lines: 2) {
+  display: -webkit-box;
+  -webkit-line-clamp: $lines;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+// Button Utilities
+@mixin btn-base {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: $spacing-sm;
+  padding: $spacing-md $spacing-lg;
+  border: none;
+  border-radius: $radius-md;
+  font-size: $font-size-md;
+  font-weight: $font-weight-semibold;
+  cursor: pointer;
+  transition: all $transition-base;
+  text-decoration: none;
+  user-select: none;
+  
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+}
+
+@mixin btn-primary {
+  @include btn-base;
+  background: linear-gradient(135deg, $primary, $secondary);
+  color: $white;
+  
+  &:hover:not(:disabled) {
+    opacity: 0.92;
+    transform: translateY(-1px);
+    box-shadow: 0 8px 16px rgba(30, 58, 95, 0.2);
+  }
+  
+  &:active:not(:disabled) {
+    transform: translateY(0);
+  }
+}
+
+@mixin btn-secondary {
+  @include btn-base;
+  background: transparent;
+  color: $secondary;
+  border: 2px solid $secondary;
+  
+  &:hover:not(:disabled) {
+    background: rgba(46, 117, 182, 0.08);
+  }
+}
+
+@mixin btn-danger {
+  @include btn-base;
+  background: $danger;
+  color: $white;
+  
+  &:hover:not(:disabled) {
+    opacity: 0.92;
+    transform: translateY(-1px);
+  }
+}
+
+// Input Utilities
+@mixin form-control {
+  width: 100%;
+  padding: $spacing-md;
+  border: 2px solid $border;
+  border-radius: $radius-md;
+  font-size: $font-size-md;
+  font-family: inherit;
+  transition: border-color $transition-base, box-shadow $transition-base;
+  
+  &:focus {
+    outline: none;
+    border-color: $secondary;
+    box-shadow: 0 0 0 3px rgba(46, 117, 182, 0.1);
+  }
+  
+  &:disabled {
+    background: #f5f5f5;
+    cursor: not-allowed;
+  }
+  
+  &.is-invalid {
+    border-color: $danger;
+    
+    &:focus {
+      box-shadow: 0 0 0 3px rgba(220, 53, 69, 0.1);
+    }
+  }
+}
+
+// Responsive Utilities
+@mixin responsive($bp) {
+  @if $bp == sm {
+    @media (max-width: $sm) { @content; }
+  } @else if $bp == md {
+    @media (max-width: $md) { @content; }
+  } @else if $bp == lg {
+    @media (max-width: $lg) { @content; }
+  } @else if $bp == xl {
+    @media (max-width: $xl) { @content; }
+  }
+}
+
+@mixin responsive-min($bp) {
+  @if $bp == sm {
+    @media (min-width: $sm) { @content; }
+  } @else if $bp == md {
+    @media (min-width: $md) { @content; }
+  } @else if $bp == lg {
+    @media (min-width: $lg) { @content; }
+  } @else if $bp == xl {
+    @media (min-width: $xl) { @content; }
+  }
+}
+
+// Animation Utilities
+@mixin gradient-btn {
+  background: linear-gradient(135deg, $primary, $secondary);
+  color: $white;
+  border: none;
+  border-radius: $radius-md;
+  cursor: pointer;
+  transition: opacity $transition-base, transform $transition-base;
+  
+  &:hover {
+    opacity: 0.92;
+    transform: translateY(-1px);
+  }
+  
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+}
+
+@mixin slide-in-up {
+  animation: slideInUp 0.3s ease;
+}
+
+@mixin fade-in {
+  animation: fadeIn 0.3s ease;
+}
+
+@mixin scale-in {
+  animation: scaleIn 0.3s ease;
+}
+
+// Animations - defined in main styles
+// .slide-in-up { @include slide-in-up; }
+// .fade-in { @include fade-in; }
+// .scale-in { @include scale-in; }
+
+
