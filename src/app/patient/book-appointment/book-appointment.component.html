@@ -1,1 +1,115 @@
-<p>book-appointment works!</p>
+<!-- src/app/patient/book-appointment/book-appointment.component.html -->
+<div class="dashboard-layout">
+  <aside class="sidebar">
+    <div class="sidebar-logo">🏥</div>
+    <nav>
+      <a routerLink="/patient/dashboard"       routerLinkActive="active">📊 Dashboard</a>
+      <a routerLink="/patient/search-doctors"  routerLinkActive="active">🔍 Find Doctors</a>
+      <a routerLink="/patient/book-appointment" routerLinkActive="active">📅 Book</a>
+      <a routerLink="/patient/my-appointments" routerLinkActive="active">📋 My Appointments</a>
+    </nav>
+    <button class="logout-btn" (click)="auth.logout()">🚪 Logout</button>
+  </aside>
+ 
+  <main class="main-content">
+    <div class="page-header"><h1>Book an Appointment</h1></div>
+ 
+    <!-- Step 1: Search -->
+    <div class="card">
+      <div class="card-header"><h2>Step 1: Select Specialty, Mode & Date</h2></div>
+      <div class="card-body">
+        <div class="form-grid">
+          <div class="form-group">
+            <label>Specialty *</label>
+            <select class="form-control" [(ngModel)]="selectedSpec">
+              <option [value]="0">-- Select Specialty --</option>
+              <optgroup *ngFor="let cat of groupKeys" [label]="cat">
+                <option *ngFor="let s of specializationGroups[cat]" [value]="s.id">
+                  {{ s.name }} ({{ s.doctorCount }} available)
+                </option>
+              </optgroup>
+            </select>
+          </div>
+ 
+          <div class="form-group">
+            <label>Consultation Mode *</label>
+            <select class="form-control" [(ngModel)]="selectedMode">
+              <option value="">-- Select Mode --</option>
+              <option value="Online">🌐 Online (Teleconsultation)</option>
+              <option value="Offline">🏥 Offline (In-Clinic)</option>
+            </select>
+          </div>
+ 
+          <div class="form-group">
+            <label>Preferred Date *</label>
+            <input type="date" class="form-control" [(ngModel)]="selectedDate"
+                   [min]="minDate">
+          </div>
+        </div>
+ 
+        <button class="btn-primary" (click)="searchDoctors()" [disabled]="searching">
+          {{ searching ? 'Searching...' : '🔍 Search Available Doctors' }}
+        </button>
+      </div>
+    </div>
+ 
+    <!-- Not Available -->
+    <div *ngIf="noAvailability" class="alert alert-warning">
+      <strong>⚠ Not Available</strong> — No doctors available for the selected specialty, mode, and date.
+      Please try a different combination.
+    </div>
+ 
+    <!-- Step 2: Pick Doctor -->
+    <div *ngIf="availableDoctors.length > 0" class="card">
+      <div class="card-header"><h2>Step 2: Select a Doctor</h2></div>
+      <div class="card-body">
+        <div class="doctor-grid">
+          <div *ngFor="let doc of availableDoctors"
+               class="doctor-card"
+               [class.selected]="selectedDoctor?.doctorId === doc.doctorId"
+               (click)="selectDoctor(doc)">
+            <div class="doctor-avatar">👨‍⚕️</div>
+            <div class="doctor-info">
+              <h3>Dr. {{ doc.doctorName }}</h3>
+              <p>{{ doc.degree }}</p>
+              <p><strong>{{ doc.experience }} yrs</strong> experience</p>
+              <span class="mode-badge" [class]="doc.mode.toLowerCase()">{{ doc.mode }}</span>
+            </div>
+            <div *ngIf="selectedDoctor?.doctorId === doc.doctorId" class="selected-tick">✓</div>
+          </div>
+        </div>
+      </div>
+    </div>
+ 
+    <!-- Step 3: Pick Time Slot -->
+    <div *ngIf="selectedDoctor" class="card">
+      <div class="card-header">
+        <h2>Step 3: Select Time Slot for Dr. {{ selectedDoctor.doctorName }}</h2>
+      </div>
+      <div class="card-body">
+        <div class="time-slot-grid">
+          <button *ngFor="let slot of timeSlots"
+                  class="time-slot"
+                  [class.booked]="isSlotBooked(slot)"
+                  [class.selected]="selectedTime === slot"
+                  [disabled]="isSlotBooked(slot)"
+                  (click)="selectedTime = slot">
+            {{ slot }}
+            <small *ngIf="isSlotBooked(slot)">Booked</small>
+          </button>
+        </div>
+ 
+        <div class="form-group" style="margin-top:20px;">
+          <label>Notes / Reason for Visit (optional)</label>
+          <textarea class="form-control" [(ngModel)]="notes" rows="3"
+                    placeholder="Describe your symptoms or reason for visit..."></textarea>
+        </div>
+ 
+        <button class="btn-primary btn-book" (click)="book()" [disabled]="loading || !selectedTime">
+          {{ loading ? 'Booking...' : '✓ Confirm Booking' }}
+        </button>
+      </div>
+    </div>
+  </main>
+</div>
+

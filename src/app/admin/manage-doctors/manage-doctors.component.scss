@@ -1,0 +1,10 @@
+.search-input {
+  padding: 8px 14px; border: 2px solid #e0e0e0; border-radius: 8px;
+  font-size: 14px; min-width: 280px;
+  &:focus { outline: none; border-color: #2E75B6; }
+}
+.form-select-sm { padding:6px 12px; border:2px solid #e0e0e0; border-radius:6px; font-size:13px; }
+.btn-sm { padding:6px 14px; border-radius:6px; border:none; font-size:12px; font-weight:600; cursor:pointer; }
+.btn-green { background:#d4edda; color:#155724; }
+.btn-red   { background:#f8d7da; color:#721c24; }
+.loading   { text-align:center; padding:40px; color:#888; }

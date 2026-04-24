@@ -1,0 +1,50 @@
+/* src/app/doctor/dashboard/dashboard.component.scss */
+.doctor-dashboard {
+  padding: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.dashboard-header {
+  background: linear-gradient(135deg, #1E3A5F 0%, #0D6E6E 100%);
+  color: #fff;
+  border-radius: 16px;
+  padding: 2rem;
+  margin-bottom: 2rem;
+  h2 { font-size: 1.8rem; margin: 0 0 0.5rem; }
+  p  { opacity: 0.85; margin: 0; }
+}
+
+.stats-row {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(280px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.stat-card {
+  background: #fff;
+  border-radius: 12px;
+  padding: 1.25rem;
+  box-shadow: 0 4px 16px rgba(0,0,0,.08);
+  text-align: center;
+  border-top: 3px solid #2E75B6;
+  .value { font-size: 2rem; font-weight: 700; color: #1E3A5F; }
+  .label { color: #888; font-size: 0.85rem; }
+}
+
+.appointments-table-wrap {
+  background: #fff;
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: 0 4px 16px rgba(0,0,0,.08);
+  overflow-x: auto;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  th { background: #1E3A5F; color: #fff; padding: 0.75rem 1rem; text-align: left; font-size: 0.85rem; }
+  td { padding: 0.75rem 1rem; border-bottom: 1px solid #f0f0f0; font-size: 0.9rem; }
+  tr:hover td { background: #f8f9fa; }
+}

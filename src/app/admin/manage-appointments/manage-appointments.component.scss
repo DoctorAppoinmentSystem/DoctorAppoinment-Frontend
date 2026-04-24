@@ -1,0 +1,11 @@
+.search-input {
+  padding: 8px 14px; border: 2px solid #e0e0e0; border-radius: 8px;
+  font-size: 14px; min-width: 220px;
+  &:focus { outline: none; border-color: #2E75B6; }
+}
+.form-select-sm { padding:6px 12px; border:2px solid #e0e0e0; border-radius:6px; font-size:13px; }
+.btn-sm { padding:5px 12px; border-radius:6px; border:none; font-size:12px; font-weight:600; cursor:pointer; margin-right:4px; }
+.btn-green { background:#d4edda; color:#155724; }
+.btn-red   { background:#f8d7da; color:#721c24; }
+.btn-blue  { background:#d1ecf1; color:#0c5460; }
+.loading   { text-align:center; padding:40px; color:#888; }
