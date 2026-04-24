@@ -51,7 +51,7 @@
           <tbody>
             <tr *ngFor="let d of doctors; let i=index">
               <td>{{ i+1 }}</td>
-              <td>Dr. {{ d.name }}</td>
+              <td>{{ d.name }}</td>
               <td>{{ d.specialization }}</td>
               <td><span [class]="'mode-badge '+d.mode.toLowerCase()">{{ d.mode }}</span></td>
               <td><span [class]="d.isAvailable?'status-badge badge-success':'status-badge badge-danger'">

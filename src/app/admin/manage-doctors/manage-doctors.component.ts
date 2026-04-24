@@ -17,20 +17,43 @@ export class ManageDoctorsComponent implements OnInit {
   searchTerm = '';
   filterMode = '';
   loading = true;
- 
+  specializations: any[] = [];
+
   constructor(private http: HttpClient, public auth: AuthService) {}
- 
-  ngOnInit(): void { this.load(); }
- 
+
+  ngOnInit(): void { 
+    this.loadSpecializations().then(() => this.load()); 
+  }
+
+  loadSpecializations(): Promise<void> {
+    return new Promise((resolve) => {
+      this.http.get(`${API}/specialization`).subscribe({
+        next: (res: any) => {
+          this.specializations = res;
+          resolve();
+        },
+        error: () => resolve() // even if error, proceed
+      });
+    });
+  }
+
   load(): void {
     this.loading = true;
     this.http.get(`${API}/admin/doctors`).subscribe({
       next: (data: any) => {
-        this.doctors = data;
+        this.doctors = data.map((d: any) => ({
+          ...d,
+          specialization: this.getSpecializationName(d.specializationId)
+        }));
         this.applyFilter();
         this.loading = false;
       }
     });
+  }
+
+  getSpecializationName(id: number): string {
+    const spec = this.specializations.find(s => s.id === id);
+    return spec ? spec.name : 'Unknown';
   }
  
   applyFilter(): void {

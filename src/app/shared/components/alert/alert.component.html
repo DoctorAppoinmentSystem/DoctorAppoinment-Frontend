@@ -1,1 +1,15 @@
-<p>alert works!</p>
+<!-- src/app/shared/components/alert/alert.component.html -->
+<div *ngIf="visible && message" [class]="cssClass" role="alert">
+
+  <!-- Icon -->
+  <span class="alert-icon">{{ icon }}</span>
+
+  <!-- Message content -->
+  <div class="alert-content">
+    <span class="alert-message">{{ message }}</span>
+  </div>
+
+  <!-- Close button -->
+  <button class="alert-close" (click)="close()" aria-label="Close">&times;</button>
+
+</div>
