@@ -1,1 +1,76 @@
-<p>schedule works!</p>
+<!-- src/app/doctor/schedule/schedule.component.html -->
+<div class="dashboard-layout">
+  <aside class="sidebar">
+    <div class="sidebar-logo">👨‍⚕️</div>
+    <nav>
+      <a routerLink="/doctor/dashboard"    routerLinkActive="active">📊 Dashboard</a>
+      <a routerLink="/doctor/appointments" routerLinkActive="active">📋 Appointments</a>
+      <a routerLink="/doctor/schedule"     routerLinkActive="active">🗓️ Schedule</a>
+    </nav>
+    <button class="logout-btn" (click)="auth.logout()">🚪 Logout</button>
+  </aside>
+  <main class="main-content">
+    <div class="page-header"><h1>My Schedule</h1></div>
+ 
+    <div class="stats-grid">
+      <div class="stat-card blue">
+        <span class="stat-icon">📅</span>
+        <div>
+          <div class="stat-number">{{ todayAppts.length }}</div>
+          <div class="stat-label">Today's Appointments</div>
+        </div>
+      </div>
+      <div class="stat-card green">
+        <span class="stat-icon">⏭️</span>
+        <div>
+          <div class="stat-number">{{ upcomingAppts.length }}</div>
+          <div class="stat-label">Upcoming</div>
+        </div>
+      </div>
+    </div>
+ 
+    <!-- Today's time slot view -->
+    <div class="card">
+      <div class="card-header"><h2>Today's Slot Overview — {{ today }}</h2></div>
+      <div class="card-body">
+        <div class="slot-grid">
+          <div *ngFor="let slot of timeSlots" class="slot-item"
+               [class.booked]="isTimeBooked(slot)"
+               [class.free]="!isTimeBooked(slot)">
+            <div class="slot-time">{{ slot }}</div>
+            <div class="slot-patient">
+              <span *ngIf="isTimeBooked(slot)">{{ getPatientForSlot(slot) }}</span>
+              <span *ngIf="!isTimeBooked(slot)" class="free-label">Available</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+ 
+    <!-- Upcoming list -->
+    <div class="card">
+      <div class="card-header"><h2>Upcoming Appointments</h2></div>
+      <div class="card-body">
+        <div *ngIf="loading" class="loading">Loading...</div>
+        <table *ngIf="!loading && upcomingAppts.length > 0" class="data-table">
+          <thead>
+            <tr><th>Patient</th><th>Date</th><th>Time</th><th>Mode</th><th>Status</th></tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let a of upcomingAppts">
+              <td>{{ a.patientName }}</td>
+              <td>{{ a.appointmentDate | date:'dd MMM yyyy' }}</td>
+              <td>{{ a.appointmentTime }}</td>
+              <td><span [class]="'mode-badge ' + a.mode.toLowerCase()">{{ a.mode }}</span></td>
+              <td><span class="status-badge badge-success">{{ a.status }}</span></td>
+            </tr>
+          </tbody>
+        </table>
+        <div *ngIf="!loading && upcomingAppts.length === 0" class="empty-state">
+          No upcoming appointments.
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+

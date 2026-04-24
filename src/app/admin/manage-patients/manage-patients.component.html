@@ -1,1 +1,46 @@
-<p>manage-patients works!</p>
+<!-- src/app/admin/manage-patients/manage-patients.component.html -->
+<div class="dashboard-layout">
+  <aside class="sidebar">
+    <div class="sidebar-logo">⚕️</div>
+    <nav>
+      <a routerLink="/admin/dashboard"           routerLinkActive="active">📊 Dashboard</a>
+      <a routerLink="/admin/manage-doctors"      routerLinkActive="active">👨‍⚕️ Doctors</a>
+      <a routerLink="/admin/manage-patients"     routerLinkActive="active">👤 Patients</a>
+      <a routerLink="/admin/manage-appointments" routerLinkActive="active">📋 Appointments</a>
+      <a routerLink="/admin/statistics"          routerLinkActive="active">📈 Statistics</a>
+    </nav>
+    <button class="logout-btn" (click)="auth.logout()">🚪 Logout</button>
+  </aside>
+  <main class="main-content">
+    <div class="page-header"><h1>Manage Patients</h1></div>
+ 
+    <div class="filter-bar card" style="padding:16px 24px;margin-bottom:20px;">
+      <input type="text" class="search-input" [(ngModel)]="searchTerm"
+             (input)="applyFilter()" placeholder="🔍 Search by name or email...">
+      <span style="margin-left:16px;font-size:13px;color:#888;">{{ filtered.length }} patients</span>
+    </div>
+ 
+    <div class="card">
+      <div class="card-body">
+        <div *ngIf="loading" class="loading">Loading...</div>
+        <table *ngIf="!loading" class="data-table">
+          <thead>
+            <tr><th>#</th><th>Name</th><th>Email</th><th>Phone</th><th>Address</th><th>Last Login</th><th>Registered</th></tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let p of filtered; let i=index">
+              <td>{{ i+1 }}</td>
+              <td>{{ p.name }}</td>
+              <td>{{ p.email }}</td>
+              <td>{{ p.phone || '-' }}</td>
+              <td>{{ p.address || '-' }}</td>
+              <td>{{ p.lastLogin ? (p.lastLogin | date:'dd MMM yyyy HH:mm') : 'Never' }}</td>
+              <td>{{ p.createdAt | date:'dd MMM yyyy' }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </main>
+</div>
+

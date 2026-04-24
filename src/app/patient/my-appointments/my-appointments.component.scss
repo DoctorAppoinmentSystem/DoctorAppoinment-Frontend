@@ -1,0 +1,13 @@
+/* Uses global styles from styles.scss */
+.form-select-sm {
+  padding: 6px 12px;
+  border: 2px solid #e0e0e0;
+  border-radius: 6px;
+  font-size: 13px;
+  background: #fff;
+  &:focus { outline: none; border-color: #2E75B6; }
+}
+.loading { text-align: center; padding: 40px; color: #888; font-size: 16px; }
+.empty-state { text-align: center; padding: 48px; color: #888; }
+.filter-bar { display: flex; align-items: center; }
+
