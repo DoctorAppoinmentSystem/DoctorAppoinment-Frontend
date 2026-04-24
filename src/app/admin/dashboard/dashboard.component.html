@@ -1,1 +1,121 @@
-<p>dashboard works!</p>
+<!-- src/app/admin/dashboard/dashboard.component.html -->
+<div class="dashboard-layout">
+  <aside class="sidebar">
+    <div class="sidebar-logo">⚕️</div>
+    <nav>
+      <a routerLink="/admin/dashboard"           routerLinkActive="active">📊 Dashboard</a>
+      <a routerLink="/admin/manage-doctors"      routerLinkActive="active">👨‍⚕️ Doctors</a>
+      <a routerLink="/admin/manage-patients"     routerLinkActive="active">👤 Patients</a>
+      <a routerLink="/admin/manage-appointments" routerLinkActive="active">📋 Appointments</a>
+      <a routerLink="/admin/statistics"          routerLinkActive="active">📈 Statistics</a>
+    </nav>
+    <button class="logout-btn" (click)="logout()">🚪 Logout</button>
+  </aside>
+  <main class="main-content">
+    <div class="page-header"><h1>Admin Dashboard</h1></div>
+ 
+    <!-- Stats -->
+    <div class="stats-grid">
+      <div class="stat-card blue">
+        <span class="stat-icon">👨‍⚕️</span>
+        <div><div class="stat-number">{{ stats.totalDoctors || 0 }}</div><div class="stat-label">Total Doctors</div></div>
+      </div>
+      <div class="stat-card green">
+        <span class="stat-icon">👤</span>
+        <div><div class="stat-number">{{ stats.totalPatients || 0 }}</div><div class="stat-label">Patients</div></div>
+      </div>
+      <div class="stat-card orange">
+        <span class="stat-icon">📋</span>
+        <div><div class="stat-number">{{ stats.totalAppts || 0 }}</div><div class="stat-label">Appointments</div></div>
+      </div>
+      <div class="stat-card red">
+        <span class="stat-icon">⏳</span>
+        <div><div class="stat-number">{{ stats.pendingAppts || 0 }}</div><div class="stat-label">Pending</div></div>
+      </div>
+    </div>
+ 
+    <!-- Tabs -->
+    <div class="tab-bar">
+      <button [class.active]="activeTab==='doctors'"  (click)="activeTab='doctors'">Doctors</button>
+      <button [class.active]="activeTab==='patients'" (click)="activeTab='patients'">Patients</button>
+      <button [class.active]="activeTab==='appts'"    (click)="activeTab='appts'">Appointments</button>
+      <button [class.active]="activeTab==='logs'"     (click)="activeTab='logs'">Activity Logs</button>
+    </div>
+ 
+    <!-- Doctors Tab -->
+    <div *ngIf="activeTab==='doctors'" class="card">
+      <div class="card-header"><h2>Doctors</h2></div>
+      <div class="card-body">
+        <table class="data-table">
+          <thead><tr><th>#</th><th>Name</th><th>Specialization</th><th>Mode</th><th>Status</th><th>Action</th></tr></thead>
+          <tbody>
+            <tr *ngFor="let d of doctors; let i=index">
+              <td>{{ i+1 }}</td>
+              <td>{{ d.name }}</td>
+              <td>{{ d.specialization }}</td>
+              <td><span [class]="'mode-badge '+d.mode.toLowerCase()">{{ d.mode }}</span></td>
+              <td><span [class]="d.isAvailable?'status-badge badge-success':'status-badge badge-danger'">
+                {{ d.isAvailable ? 'Active' : 'Inactive' }}
+              </span></td>
+              <td><button (click)="toggleDoctorStatus(d.id)" class="btn-danger-sm">
+                {{ d.isAvailable ? 'Deactivate' : 'Activate' }}</button></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+ 
+    <!-- Patients Tab -->
+    <div *ngIf="activeTab==='patients'" class="card">
+      <div class="card-header"><h2>Patients</h2></div>
+      <div class="card-body">
+        <table class="data-table">
+          <thead><tr><th>#</th><th>Name</th><th>Email</th><th>Phone</th><th>Last Login</th></tr></thead>
+          <tbody>
+            <tr *ngFor="let p of patients; let i=index">
+              <td>{{ i+1 }}</td><td>{{ p.name }}</td><td>{{ p.email }}</td>
+              <td>{{ p.phone || '-' }}</td>
+              <td>{{ p.lastLogin ? (p.lastLogin | date:'dd MMM yyyy') : 'Never' }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+ 
+    <!-- Appointments Tab -->
+    <div *ngIf="activeTab==='appts'" class="card">
+      <div class="card-header"><h2>All Appointments</h2></div>
+      <div class="card-body">
+        <table class="data-table">
+          <thead><tr><th>#</th><th>Patient</th><th>Doctor</th><th>Date</th><th>Mode</th><th>Status</th></tr></thead>
+          <tbody>
+            <tr *ngFor="let a of appointments; let i=index">
+              <td>{{ i+1 }}</td><td>{{ a.patientName }}</td><td>Dr. {{ a.doctorName }}</td>
+              <td>{{ a.appointmentDate | date:'dd MMM yyyy' }}</td>
+              <td><span [class]="'mode-badge '+a.mode.toLowerCase()">{{ a.mode }}</span></td>
+              <td><span class="status-badge badge-info">{{ a.status }}</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+ 
+    <!-- Logs Tab -->
+    <div *ngIf="activeTab==='logs'" class="card">
+      <div class="card-header"><h2>Activity Logs</h2></div>
+      <div class="card-body">
+        <table class="data-table">
+          <thead><tr><th>#</th><th>Action</th><th>Entity</th><th>Description</th><th>IP</th><th>Time</th></tr></thead>
+          <tbody>
+            <tr *ngFor="let l of logs; let i=index">
+              <td>{{ i+1 }}</td><td>{{ l.action }}</td><td>{{ l.entity }}</td>
+              <td>{{ l.description }}</td><td>{{ l.ipAddress }}</td>
+              <td>{{ l.createdAt | date:'dd MMM yyyy HH:mm' }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+ 
+  </main>
+</div>
