@@ -1,0 +1,65 @@
+// src/styles/_variables.scss
+// Colors - Professional Theme
+$primary:     #0F1419; // Dark slate
+$secondary:   #1DA1F2; // Twitter blue
+$accent:      #00BFA5; // Teal accent
+$success:     #00C853;
+$warning:     #FF9800;
+$danger:      #F44336;
+$info:        #2196F3;
+$light-bg:    #F7F9FA;
+$white:       #FFFFFF;
+$text:        #14171A;
+$text-muted:  #657786;
+$border:      #E1E8ED;
+$shadow-light: rgba(0,0,0,0.05);
+$shadow-mid:   rgba(0,0,0,0.08);
+$shadow-dark:  rgba(0,0,0,0.15);
+
+// Spacing - Reduced for compact UI
+$spacing-xs:  4px;
+$spacing-sm:  8px;
+$spacing-md:  12px;
+$spacing-lg:  16px;
+$spacing-xl:  20px;
+$spacing-2xl: 24px;
+
+// Typography - Smaller fonts
+$font-size-xs: 10px;
+$font-size-sm: 12px;
+$font-size-md: 14px;
+$font-size-lg: 16px;
+$font-size-xl: 18px;
+$font-size-2xl: 20px;
+$font-weight-light: 300;
+$font-weight-normal: 400;
+$font-weight-medium: 500;
+$font-weight-semibold: 600;
+$font-weight-bold: 700;
+
+// Border Radius
+$radius-sm: 4px;
+$radius-md: 6px;
+$radius-lg: 8px;
+$radius-xl: 12px;
+
+// Transitions
+$transition-fast: 0.15s ease;
+$transition-base: 0.2s ease;
+$transition-slow: 0.3s ease;
+
+
+// Z-index
+$z-dropdown: 1000;
+$z-sticky: 1020;
+$z-fixed: 1030;
+$z-modal: 1040;
+$z-popover: 1060;
+$z-tooltip: 1070;
+
+// Breakpoints
+$sm: 576px;
+$md: 768px;
+$lg: 992px;
+$xl: 1200px;
+$xxl: 1400px;

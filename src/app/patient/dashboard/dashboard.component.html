@@ -1,0 +1,86 @@
+<!-- src/app/patient/dashboard/dashboard.component.html -->
+<div class="dashboard-layout">
+  <aside class="sidebar">
+    <div class="sidebar-logo">🏥</div>
+    <nav>
+      <a routerLink="/patient/dashboard"      routerLinkActive="active">📊 Dashboard</a>
+      <a routerLink="/patient/search-doctors" routerLinkActive="active">🔍 Find Doctors</a>
+      <a routerLink="/patient/my-appointments" routerLinkActive="active">📋 My Appointments</a>
+    </nav>
+    <button class="logout-btn" (click)="logout()">🚪 Logout</button>
+  </aside>
+
+  <main class="main-content">
+    <div class="page-header">
+      <h1>My Dashboard</h1>
+      <a routerLink="/patient/search-doctors" class="btn-primary">+ Book Appointment</a>
+    </div>
+
+    <!-- Stats Cards -->
+    <div class="stats-grid">
+      <div class="stat-card blue">
+        <span class="stat-icon">📋</span>
+        <div>
+          <div class="stat-number">{{ appointments.length }}</div>
+          <div class="stat-label">Total Appointments</div>
+        </div>
+      </div>
+      <div class="stat-card green">
+        <span class="stat-icon">✅</span>
+        <div>
+          <div class="stat-number">
+            {{ appointments | statusCount:'Confirmed' }}
+          </div>
+          <div class="stat-label">Confirmed</div>
+        </div>
+      </div>
+      <div class="stat-card orange">
+        <span class="stat-icon">⏳</span>
+        <div>
+          <div class="stat-number">
+            {{ appointments | statusCount:'Pending' }}
+          </div>
+          <div class="stat-label">Pending</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Appointments Table -->
+    <div class="card">
+      <div class="card-header">
+        <h2>Recent Appointments</h2>
+      </div>
+      <div class="card-body">
+        <div *ngIf="loading" class="loading">Loading...</div>
+        <div *ngIf="!loading && appointments.length === 0" class="empty-state">
+          <p>No appointments found. <a routerLink="/patient/search-doctors">Book now!</a></p>
+        </div>
+        <table *ngIf="!loading && appointments.length > 0" class="data-table">
+          <thead>
+            <tr>
+              <th>#</th><th>Doctor</th><th>Specialization</th>
+              <th>Date</th><th>Time</th><th>Mode</th><th>Status</th><th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let appt of appointments; let i = index">
+              <td>{{ i+1 }}</td>
+              <td>Dr. {{ appt.doctorName }}</td>
+              <td>{{ appt.specialization }}</td>
+              <td>{{ appt.appointmentDate | date:'dd MMM yyyy' }}</td>
+              <td>{{ appt.appointmentTime }}</td>
+              <td><span [class]="'mode-badge ' + appt.mode.toLowerCase()">{{ appt.mode }}</span></td>
+              <td><span [class]="'status-badge ' + getStatusClass(appt.status)">{{ appt.status }}</span></td>
+              <td>
+                <button *ngIf="appt.status === 'Pending' || appt.status === 'Confirmed'"
+                        (click)="cancelAppointment(appt.id)"
+                        class="btn-danger-sm">Cancel</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </main>
+</div>
+

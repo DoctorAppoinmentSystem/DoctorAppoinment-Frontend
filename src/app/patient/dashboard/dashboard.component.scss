@@ -1,0 +1,77 @@
+/* src/app/patient/dashboard/dashboard.component.scss */
+.patient-dashboard {
+  padding: 2rem;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(220px, 1fr));
+  gap: 1rem;
+  margin-bottom: 2rem;
+  width: min(100%, 1100px);
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.welcome-banner {
+  background: linear-gradient(135deg, #1E3A5F 0%, #2E75B6 50%, #0D6E6E 100%);
+  color: #fff;
+  border-radius: 16px;
+  padding: 2rem;
+  margin-bottom: 2rem;
+  h2 { font-size: 1.8rem; margin: 0 0 0.5rem; }
+  p  { opacity: 0.85; margin: 0; }
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(220px, 1fr));
+  gap: 1rem;
+  margin-bottom: 2rem;
+  width: min(100%, 1100px);
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.stat-card {
+  background: #fff;
+  border-radius: 12px;
+  padding: 1.2rem;
+  box-shadow: 0 4px 16px rgba(0,0,0,.08);
+  text-align: center;
+  .stat-number { font-size: 2.2rem; font-weight: 700; color: #2E75B6; }
+  .stat-label  { color: #666; font-size: 0.85rem; margin-top: 0.25rem; }
+}
+
+.appointments-section {
+  background: #fff;
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: 0 4px 16px rgba(0,0,0,.08);
+}
+
+.appointment-card {
+  border: 1px solid #e0e0e0;
+  border-radius: 10px;
+  padding: 1rem 1.25rem;
+  margin-bottom: 0.75rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: box-shadow 0.2s;
+  &:hover { box-shadow: 0 4px 12px rgba(0,0,0,.1); }
+}
+
+.badge {
+  padding: 0.25rem 0.75rem;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  &.Pending    { background: #fff3cd; color: #856404; }
+  &.Confirmed  { background: #d1ecf1; color: #0c5460; }
+  &.Cancelled  { background: #f8d7da; color: #721c24; }
+  &.Completed  { background: #d4edda; color: #155724; }
+  &.NoShow     { background: #e2e3e5; color: #383d41; }
+}

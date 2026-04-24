@@ -1,0 +1,65 @@
+<!-- src/app/admin/manage-appointments/manage-appointments.component.html -->
+<div class="dashboard-layout">
+  <aside class="sidebar">
+    <div class="sidebar-logo">⚕️</div>
+    <nav>
+      <a routerLink="/admin/dashboard"           routerLinkActive="active">📊 Dashboard</a>
+      <a routerLink="/admin/manage-doctors"      routerLinkActive="active">👨‍⚕️ Doctors</a>
+      <a routerLink="/admin/manage-patients"     routerLinkActive="active">👤 Patients</a>
+      <a routerLink="/admin/manage-appointments" routerLinkActive="active">📋 Appointments</a>
+      <a routerLink="/admin/statistics"          routerLinkActive="active">📈 Statistics</a>
+    </nav>
+    <button class="logout-btn" (click)="auth.logout()">🚪 Logout</button>
+  </aside>
+  <main class="main-content">
+    <div class="page-header"><h1>All Appointments</h1></div>
+    <div class="filter-bar card" style="padding:16px 24px;margin-bottom:20px;">
+      <div style="display:flex;gap:12px;flex-wrap:wrap;align-items:center;">
+        <input class="search-input" [(ngModel)]="searchTerm" (input)="applyFilter()"
+               placeholder="🔍 Search patient/doctor...">
+        <select class="form-select-sm" [(ngModel)]="filterStatus" (change)="applyFilter()">
+          <option value="">All Status</option>
+          <option *ngFor="let s of ['Pending','Confirmed','Completed','Cancelled','NoShow']" [value]="s">{{ s }}</option>
+        </select>
+        <select class="form-select-sm" [(ngModel)]="filterMode" (change)="applyFilter()">
+          <option value="">All Modes</option>
+          <option value="Online">Online</option>
+          <option value="Offline">Offline</option>
+        </select>
+        <span style="font-size:13px;color:#888;">{{ filtered.length }} records</span>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-body">
+        <div *ngIf="loading" class="loading">Loading...</div>
+        <table *ngIf="!loading" class="data-table">
+          <thead>
+            <tr><th>#</th><th>Patient</th><th>Doctor</th><th>Specialization</th>
+              <th>Date</th><th>Time</th><th>Mode</th><th>Status</th><th>Actions</th></tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let a of filtered; let i=index">
+              <td>{{ i+1 }}</td>
+              <td>{{ a.patientName }}</td>
+              <td>Dr. {{ a.doctorName }}</td>
+              <td>{{ a.specialization }}</td>
+              <td>{{ a.appointmentDate | date:'dd MMM yyyy' }}</td>
+              <td>{{ a.appointmentTime }}</td>
+              <td><span [class]="'mode-badge '+a.mode.toLowerCase()">{{ a.mode }}</span></td>
+              <td><span [class]="'status-badge '+getStatusClass(a.status)">{{ a.status }}</span></td>
+              <td>
+                <button *ngIf="a.status==='Pending'" (click)="updateStatus(a.id,'Confirmed')"
+                        class="btn-sm btn-green">Confirm</button>
+                <button *ngIf="a.status!=='Cancelled'&&a.status!=='Completed'"
+                        (click)="updateStatus(a.id,'Cancelled')" class="btn-sm btn-red">Cancel</button>
+                <button *ngIf="a.status==='Confirmed'" (click)="updateStatus(a.id,'Completed')"
+                        class="btn-sm btn-blue">Complete</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </main>
+</div>
+
